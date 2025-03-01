@@ -1,5 +1,5 @@
 import express from "express";
-import Booking, { BookingDetails } from "../model/Booking";
+import Booking from "../model/Booking";
 import {
     createBooking,
     getAllBookings,
@@ -10,28 +10,27 @@ import {
 
 const router = express.Router();
 
-// Create a new booking
 router.post("/add", async (req, res) => {
     try {
         const booking: Booking = req.body;
         const result = await createBooking(booking);
         res.status(201).json(result);
     } catch (err) {
+        console.error("Error creating booking:", err);
         res.status(500).send("Error creating booking");
     }
 });
 
-// Get all bookings
 router.get("/view", async (req, res) => {
     try {
         const bookings = await getAllBookings();
         res.json(bookings);
     } catch (err) {
+        console.error("Error fetching bookings:", err);
         res.status(500).send("Error fetching bookings");
     }
 });
 
-// Get a booking by ID
 router.get("/view/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -42,11 +41,11 @@ router.get("/view/:id", async (req, res) => {
             res.status(404).send("Booking not found");
         }
     } catch (err) {
+        console.error("Error fetching booking:", err);
         res.status(500).send("Error fetching booking");
     }
 });
 
-// Update a booking
 router.put("/update/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -54,17 +53,18 @@ router.put("/update/:id", async (req, res) => {
         const updated = await updateBooking(id, booking);
         res.json(updated);
     } catch (err) {
+        console.error("Error updating booking:", err);
         res.status(500).send("Error updating booking");
     }
 });
 
-// Delete a booking
 router.delete("/delete/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         await deleteBooking(id);
         res.status(204).send();
     } catch (err) {
+        console.error("Error deleting booking:", err);
         res.status(500).send("Error deleting booking");
     }
 });
