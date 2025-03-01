@@ -1,6 +1,7 @@
 import express from 'express';
 import customerRoutes from "./routers/customer-routes";
 import carRouters from "./routers/car-routers";
+import bookingRoutes from "./routers/booking-routes";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use('/',(req,res,next)=>{
 
 app.use('/customer',customerRoutes)
 app.use('/car',carRouters)
+app.use('/booking',bookingRoutes)
 
 app.listen(3000, (err=>{
     console.log("Server running on port 3000");
